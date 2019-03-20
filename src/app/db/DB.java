@@ -53,6 +53,9 @@ public abstract class DB {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public static void getUserAccounts(User user) {
 
     }
 
