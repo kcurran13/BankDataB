@@ -4,15 +4,19 @@ package app.transaction;
 import app.Entities.User;
 import app.db.DB;
 import app.login.LoginController;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,6 +30,7 @@ public class TransferControl {
     double transferAmt;
     int accountNo;
     int clearingNo;
+    int fromAccNo;
     static ResultSet rs;
 
     @FXML
@@ -45,6 +50,7 @@ public class TransferControl {
         }
 
         dropFromAcc.setItems(data);
+        dropTestAcc.setItems(data);
     }
 
     @FXML
@@ -52,7 +58,8 @@ public class TransferControl {
         transferAmt = Integer.valueOf(txfAmount.getText());
         clearingNo = Integer.valueOf(txfClearing.getText());
         accountNo = Integer.valueOf(txfAccount.getText());
-        System.out.println(transferAmt + " " + clearingNo + " " + accountNo);
+        //listener for choicebox
+        fromAccNo = Integer.valueOf(getChoiceBoxText(dropFromAcc));
 
         DB.changeBalance(clearingNo, accountNo, transferAmt);
     }
@@ -60,9 +67,17 @@ public class TransferControl {
     @FXML
     private void getChangeBalanceText(ActionEvent event) {
         transferAmt = Integer.valueOf(txfTestAmount.getText());
+        fromAccNo = Integer.valueOf(getChoiceBoxText(dropTestAcc));
+
         if(event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
         lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, 11223344, transferAmt))));
+    }
+
+    @FXML
+    private String getChoiceBoxText(ChoiceBox<String> box) {
+        String acc = box.getValue();
+        return acc;
     }
 }
