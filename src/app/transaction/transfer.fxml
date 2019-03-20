@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.transaction.Transfer"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransferControl">
+   <children>
+      <Button layoutX="189.0" layoutY="347.0" mnemonicParsing="false" text="Complete Transfer" />
+      <ChoiceBox fx:id="dropAcc" layoutX="39.0" layoutY="93.0" prefWidth="150.0" />
+      <Label layoutX="39.0" layoutY="54.0" text="From account:" />
+      <Label layoutX="39.0" layoutY="169.0" text="To account:" />
+      <TextField fx:id= "txfAccount" layoutX="141.0" layoutY="264.0" />
+      <TextField fx:id="txfClearing" layoutX="141.0" layoutY="207.0" prefHeight="39.0" prefWidth="113.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <Label layoutX="39.0" layoutY="219.0" text="Clearing:" />
+      <Label layoutX="39.0" layoutY="270.0" text="Account:" />
+   </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package app.home;
 
 import app.Main;
+import app.db.*;
 import app.account.AccountController;
 import app.login.LoginController;
 import app.transaction.TransactionController;
@@ -58,6 +59,6 @@ public class HomeController {
 
         Main.stage.setScene(scene);
         Main.stage.show();
-
     }
+
 }
