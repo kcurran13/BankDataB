@@ -37,4 +37,27 @@ public class HomeController {
         Main.stage.show();
 
     }
+
+    @FXML
+    void goToTransfers() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/app/transaction/transfer.fxml" ) );
+        Parent fxmlInstance = loader.load();
+        Scene scene = new Scene( fxmlInstance, 800, 600 );
+
+        Main.stage.setScene(scene);
+        Main.stage.show();
+    }
+
+    @FXML
+    void goToChangeDetails() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/app/account/changedetails.fxml" ) );
+        Parent fxmlInstance = loader.load();
+        Scene scene = new Scene( fxmlInstance, 800, 600 );
+
+        Main.stage.setScene(scene);
+        Main.stage.show();
+
+    }
 }
