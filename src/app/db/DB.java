@@ -1,12 +1,11 @@
 package app.db;
 
 import app.Entities.User;
-import app.Entities.Transaction;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static javax.swing.UIManager.getString;
 
@@ -60,8 +59,12 @@ public abstract class DB {
         return newBalance;
     }
 
-    public static void getUserAccounts(User user) {
+    public static ResultSet getUserAccounts(User user) throws SQLException {
+        PreparedStatement ps = prep("SELECT AccNo FROM accounts WHERE AccOwner = ?");
 
+        ps.setLong(1, user.getUserId());
+        ResultSet result = ps.executeQuery();
+        return result;
     }
 
 

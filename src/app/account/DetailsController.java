@@ -13,7 +13,6 @@ public class DetailsController {
 
     private void loadAccounts() {
         User user = LoginController.getUser();
-        DB.getUserAccounts(user);
         //get accounts in a list of some sort and then populate the drop down
     }
 }
