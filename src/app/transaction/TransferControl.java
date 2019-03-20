@@ -61,6 +61,7 @@ public class TransferControl {
         //listener for choicebox
         fromAccNo = Integer.valueOf(getChoiceBoxText(dropFromAcc));
 
+        DB.changeBalance(3000, fromAccNo, (transferAmt*-1));
         DB.changeBalance(clearingNo, accountNo, transferAmt);
     }
 
@@ -72,7 +73,7 @@ public class TransferControl {
         if(event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
-        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, 11223344, transferAmt))));
+        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt))));
     }
 
     @FXML
