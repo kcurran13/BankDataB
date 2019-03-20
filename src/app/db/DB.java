@@ -33,19 +33,27 @@ public abstract class DB {
     }
 
     public static void changeBalance(int id, String accType, int transactionType, double amount) {
+        double newBalance;
+
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE accOwner = ? AND accType = ?");
+        PreparedStatement ps2 = prep("UPDATE accounts SET balance = 'newBalance' WHERE accOwner = ? AND accType = ?");
+
         try {
             ps.setInt(1, id);
             ps.setString(2, accType);
             ResultSet result = ps.executeQuery();
 
             while (result.next()) {
+                ps2.setInt(1, id);
+                ps2.setString(2, accType);
                 switch (transactionType) {
                     case 1: //withdrawal
-                        System.out.print((result.getLong("balance")) - amount);
+                        newBalance = (result.getLong("balance") - amount);
+                        ps2.executeUpdate();
                         break;
                     case 2: //deposit
-                        System.out.println((result.getLong("balance")) - amount);
+                        newBalance = (result.getLong("balance") + amount);
+                        ps2.executeUpdate();
                         break;
                     default:
                         System.out.println("oops!");

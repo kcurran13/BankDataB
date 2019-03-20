@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="437.0" prefWidth="478.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.login.LoginController">
+    <children>
+        <BorderPane />
+        <VBox spacing="20.0">
+            <children>
+                <TextField fx:id="txfUser" onAction="#getUserText" promptText="username" text="katetest" />
+                <TextField fx:id="txfPass" promptText="password" text="password" />
+                <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#getUserText" prefHeight="39.0" prefWidth="232.0" text="Submit" />
+            </children>
+        </VBox>
+    </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
