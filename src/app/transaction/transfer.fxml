@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="568.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransferControl">
+<AnchorPane prefHeight="677.0" prefWidth="971.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransferControl">
    <children>
-      <Button layoutX="189.0" layoutY="168.0" mnemonicParsing="false" text="Complete Transfer" />
+      <Button fx:id="btnTransfer" layoutX="554.0" layoutY="226.0" mnemonicParsing="false" onAction="#getTransferText" text="Complete Transfer" />
       <ChoiceBox fx:id="dropFromAcc" layoutX="39.0" layoutY="93.0" prefWidth="150.0" />
       <Label layoutX="39.0" layoutY="54.0" text="From account:" />
       <Label layoutX="228.0" layoutY="54.0" text="To account:" />
@@ -25,9 +25,11 @@
       <TextField fx:id="txfTestAmount" layoutX="554.0" layoutY="343.0" promptText="SEK" />
       <Label layoutX="412.0" layoutY="349.0" text="Enter amount:" />
       <Label fx:id="lblTextBalance" layoutX="554.0" layoutY="508.0" text="Updated balance here" />
-      <Button layoutX="554.0" layoutY="432.0" mnemonicParsing="false" text="Withdraw" />
-      <Button layoutX="687.0" layoutY="432.0" mnemonicParsing="false" text="Deposit" />
+      <Button fx:id="btnWithdraw" onAction="#getChangeBalanceText" layoutX="554.0" layoutY="432.0" mnemonicParsing="false" text="Withdraw" />
+      <Button fx:id="btnDeposit" onAction="#getChangeBalanceText" layoutX="687.0" layoutY="432.0" mnemonicParsing="false" text="Deposit" />
       <ChoiceBox fx:id="dropTestAcc" layoutX="213.0" layoutY="343.0" prefWidth="150.0" />
       <Label layoutX="103.0" layoutY="349.0" text="Account:" />
+      <TextField fx:id="txfAmount" layoutX="554.0" layoutY="159.0" promptText="SEK" />
+      <Label layoutX="447.0" layoutY="165.0" text="Amount:" />
    </children>
 </AnchorPane>
