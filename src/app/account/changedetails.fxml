@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.account.DetailsController">
+   <children>
+      <ChoiceBox layoutX="143.0" layoutY="93.0" prefWidth="150.0" />
+      <Label layoutX="82.0" layoutY="50.0" text="Change account name" />
+      <Label layoutX="82.0" layoutY="99.0" text="Select:" />
+      <TextField layoutX="323.0" layoutY="93.0" promptText="new name" />
+      <Button layoutX="323.0" layoutY="161.0" mnemonicParsing="false" text="Submit" />
+   </children>
+</AnchorPane>

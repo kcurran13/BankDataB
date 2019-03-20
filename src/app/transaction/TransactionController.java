@@ -15,7 +15,7 @@ public class TransactionController {
     @FXML
     private void initialize(){
         System.out.println("initialize transaction");
-        DB.changeBalance(3, "Savings",  111000);
+        DB.changeBalance(3000, 11223344,  111);
     }
 
     public void setTransaction(Transaction transaction) {

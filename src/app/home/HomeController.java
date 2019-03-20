@@ -1,10 +1,7 @@
 package app.home;
 
 import app.Main;
-import app.db.*;
-import app.account.AccountController;
 import app.login.LoginController;
-import app.transaction.TransactionController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,7 +50,7 @@ public class HomeController {
     @FXML
     void goToChangeDetails() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/app/account/changedetails.fxml" ) );
+        FXMLLoader loader = new FXMLLoader( getClass().getResource("/app/account/changedetails.fxml") );
         Parent fxmlInstance = loader.load();
         Scene scene = new Scene( fxmlInstance, 800, 600 );
 
