@@ -7,8 +7,7 @@
 *.war
 *.ear
 hs_err_pid*
-.idea/*
-.out/*
+.idea/
 
 ##########################
 ## Maven
