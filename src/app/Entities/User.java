@@ -13,4 +13,7 @@ public class User {
     public String toString(){
         return String.format("User: { id: %d, name: %s}", id, name);
     }
+    public long getUserId() {
+        return id;
+    }
 }
