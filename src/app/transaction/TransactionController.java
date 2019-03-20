@@ -15,8 +15,7 @@ public class TransactionController {
     @FXML
     private void initialize(){
         System.out.println("initialize transaction");
-        //Transaction types: 1 - withdraw, 2 - deposit, 3 - transfer??
-        DB.changeBalance(3, "Savings", 1, 100);
+        DB.changeBalance(3, "Savings",  111000);
     }
 
     public void setTransaction(Transaction transaction) {
