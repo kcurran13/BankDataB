@@ -22,6 +22,7 @@ public class LoginController {
     @FXML TextField txfUser;
     @FXML TextField txfPass;
     @FXML Button btnSubmit;
+    @FXML Label lblLoginError;
 
     private String userName;
     private String pass;
@@ -45,9 +46,13 @@ public class LoginController {
 
     @FXML
     private void loadUser(String userName, String pass){
-        user = DB.getMatchingUser(userName, pass);
+        try {
+            user = DB.getMatchingUser(userName, pass);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         if(user == null) {
-            System.out.println("sorry, wrong something!");
+            lblLoginError.setVisible(true);
         }
         else {
             goToHome();
