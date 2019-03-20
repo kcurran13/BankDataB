@@ -32,11 +32,11 @@ public abstract class DB {
         return result; // return User;
     }
 
-    public static void changeBalance(int id, String accType, int transactionType, double amount) {
-        double newBalance;
+    public static void changeBalance(int id, String accType, double amount) {
+        double newBalance = 0.0;
 
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE accOwner = ? AND accType = ?");
-        PreparedStatement ps2 = prep("UPDATE accounts SET balance = 'newBalance' WHERE accOwner = ? AND accType = ?");
+        PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE accOwner = ? AND accType = ?");
 
         try {
             ps.setInt(1, id);
@@ -44,21 +44,14 @@ public abstract class DB {
             ResultSet result = ps.executeQuery();
 
             while (result.next()) {
-                ps2.setInt(1, id);
-                ps2.setString(2, accType);
-                switch (transactionType) {
-                    case 1: //withdrawal
-                        newBalance = (result.getLong("balance") - amount);
-                        ps2.executeUpdate();
-                        break;
-                    case 2: //deposit
-                        newBalance = (result.getLong("balance") + amount);
-                        ps2.executeUpdate();
-                        break;
-                    default:
-                        System.out.println("oops!");
-                        break;
-                }
+
+
+                newBalance = (result.getLong("balance") + amount);
+                ps2.setDouble(1, newBalance);
+                ps2.setInt(2, id);
+                ps2.setString(3, accType);
+                System.out.println(newBalance);
+                ps2.executeUpdate();
             }
         } catch (Exception e) {
             System.out.println(e);
