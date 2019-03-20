@@ -7,19 +7,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransferControl">
+<AnchorPane prefHeight="568.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransferControl">
    <children>
-      <Button layoutX="189.0" layoutY="347.0" mnemonicParsing="false" text="Complete Transfer" />
-      <ChoiceBox fx:id="dropAcc" layoutX="39.0" layoutY="93.0" prefWidth="150.0" />
+      <Button layoutX="189.0" layoutY="168.0" mnemonicParsing="false" text="Complete Transfer" />
+      <ChoiceBox fx:id="dropFromAcc" layoutX="39.0" layoutY="93.0" prefWidth="150.0" />
       <Label layoutX="39.0" layoutY="54.0" text="From account:" />
-      <Label layoutX="39.0" layoutY="169.0" text="To account:" />
-      <TextField fx:id= "txfAccount" layoutX="141.0" layoutY="264.0" />
-      <TextField fx:id="txfClearing" layoutX="141.0" layoutY="207.0" prefHeight="39.0" prefWidth="113.0">
+      <Label layoutX="228.0" layoutY="54.0" text="To account:" />
+      <TextField fx:id="txfAccount" layoutX="554.0" layoutY="93.0" />
+      <TextField fx:id="txfClearing" layoutX="303.0" layoutY="93.0" prefHeight="39.0" prefWidth="113.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </TextField>
-      <Label layoutX="39.0" layoutY="219.0" text="Clearing:" />
-      <Label layoutX="39.0" layoutY="270.0" text="Account:" />
+      <Label layoutX="218.0" layoutY="99.0" text="Clearing:" />
+      <Label layoutX="448.0" layoutY="99.0" text="Account:" />
+      <Label layoutX="39.0" layoutY="284.0" text="Test Withdraw/Deposit function" />
+      <TextField fx:id="txfTestAmount" layoutX="554.0" layoutY="343.0" promptText="SEK" />
+      <Label layoutX="412.0" layoutY="349.0" text="Enter amount:" />
+      <Label fx:id="lblTextBalance" layoutX="554.0" layoutY="508.0" text="Updated balance here" />
+      <Button layoutX="554.0" layoutY="432.0" mnemonicParsing="false" text="Withdraw" />
+      <Button layoutX="687.0" layoutY="432.0" mnemonicParsing="false" text="Deposit" />
+      <ChoiceBox fx:id="dropTestAcc" layoutX="213.0" layoutY="343.0" prefWidth="150.0" />
+      <Label layoutX="103.0" layoutY="349.0" text="Account:" />
    </children>
 </AnchorPane>
