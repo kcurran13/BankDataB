@@ -33,7 +33,7 @@ public abstract class DB {
     }
 
     public static void changeBalance(int id, String accType, double amount) {
-        double newBalance = 0.0;
+        double newBalance;
 
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE accOwner = ? AND accType = ?");
         PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE accOwner = ? AND accType = ?");
@@ -44,13 +44,10 @@ public abstract class DB {
             ResultSet result = ps.executeQuery();
 
             while (result.next()) {
-
-
                 newBalance = (result.getLong("balance") + amount);
                 ps2.setDouble(1, newBalance);
                 ps2.setInt(2, id);
                 ps2.setString(3, accType);
-                System.out.println(newBalance);
                 ps2.executeUpdate();
             }
         } catch (Exception e) {
