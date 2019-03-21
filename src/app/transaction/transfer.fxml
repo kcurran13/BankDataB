@@ -25,8 +25,8 @@
       <TextField fx:id="txfTestAmount" layoutX="554.0" layoutY="343.0" promptText="SEK" />
       <Label layoutX="412.0" layoutY="349.0" text="Enter amount:" />
       <Label fx:id="lblTextBalance" layoutX="554.0" layoutY="508.0" text="Updated balance here" />
-      <Button fx:id="btnWithdraw" onAction="#getChangeBalanceText" layoutX="554.0" layoutY="432.0" mnemonicParsing="false" text="Withdraw" />
-      <Button fx:id="btnDeposit" onAction="#getChangeBalanceText" layoutX="687.0" layoutY="432.0" mnemonicParsing="false" text="Deposit" />
+      <Button fx:id="btnWithdraw" layoutX="554.0" layoutY="432.0" mnemonicParsing="false" onAction="#getChangeBalanceText" text="Withdraw" />
+      <Button fx:id="btnDeposit" layoutX="687.0" layoutY="432.0" mnemonicParsing="false" onAction="#getChangeBalanceText" text="Deposit" />
       <ChoiceBox fx:id="dropTestAcc" layoutX="213.0" layoutY="343.0" prefWidth="150.0" />
       <Label layoutX="103.0" layoutY="349.0" text="Account:" />
       <TextField fx:id="txfAmount" layoutX="554.0" layoutY="159.0" promptText="SEK" />
