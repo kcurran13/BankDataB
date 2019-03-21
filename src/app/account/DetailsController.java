@@ -22,7 +22,7 @@ public class DetailsController {
     @FXML ChoiceBox dropAccName,dropRemoveAcc;
     @FXML TextField txfNewAccName, txfChangeName;
     @FXML Button btnAccName, btnRemoveAcc, btnAddAcc;
-    @FXML Label lblAccRemoved, lblNameChanged;
+    @FXML Label lblAccRemoved, lblNameChanged, lblAccCreated;
 
     @FXML
     void initialize(){
@@ -50,7 +50,7 @@ public class DetailsController {
     private void getButtonInput(ActionEvent event) {
         //change account name
         if(event.getSource() == btnAccName) {
-            int accNo = Integer.valueOf(getChoiceBoxText(dropAccName));
+            String accNo = getChoiceBoxText(dropAccName);
             String newName = txfChangeName.getText();
             DB.changeAccName(accNo, newName);
             lblNameChanged.setVisible(true);
@@ -59,10 +59,13 @@ public class DetailsController {
         else if(event.getSource() == btnAddAcc) {
             String accName = txfNewAccName.getText();
             DB.newAccount(user, accName);
+            lblAccCreated.setVisible(true);
         }
         //remove existing account
         else if(event.getSource() == btnRemoveAcc) {
-
+            String accNo = getChoiceBoxText(dropRemoveAcc);
+            DB.removeAcc(accNo);
+            lblAccRemoved.setVisible(true);
         }
         else
             System.out.println("what happened here?");

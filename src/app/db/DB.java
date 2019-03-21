@@ -68,11 +68,11 @@ public abstract class DB {
         return result;
     }
 
-    public static void changeAccName(int account, String newName) {
+    public static void changeAccName(String account, String newName) {
         PreparedStatement ps = prep("UPDATE accounts SET accname = ? WHERE accno = ?");
         try {
             ps.setString(1, newName);
-            ps.setInt(2, account);
+            ps.setString(2, account);
             ps.executeUpdate();
 
         } catch(Exception e) {
@@ -82,7 +82,7 @@ public abstract class DB {
 
     public static void newAccount(User user, String accName) {
         Random random = new Random();
-        String id = String.format("%08d", random.nextInt(10000));
+        String id = String.format("%08d", random.nextInt(99999999));
         System.out.println(id);
 
         PreparedStatement ps = prep("INSERT INTO accounts VALUES (?,?,?,?,?)");
@@ -94,6 +94,17 @@ public abstract class DB {
             ps.setDouble(4, 0);
             ps.setString(5, accName);
 
+            ps.executeUpdate();
+        }catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void removeAcc(String accNo) {
+        PreparedStatement ps = prep("DELETE FROM accounts WHERE accno = ?");
+
+        try {
+            ps.setString(1, accNo);
             ps.executeUpdate();
         }catch(Exception e) {
             System.out.println(e);
