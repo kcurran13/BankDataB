@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class DetailsController {
     private User user;
     private ResultSet rs;
+
     @FXML ChoiceBox dropAccName,dropRemoveAcc;
     @FXML TextField txfNewAccName, txfChangeName;
     @FXML Button btnAccName, btnRemoveAcc, btnAddAcc;
@@ -56,7 +57,8 @@ public class DetailsController {
         }
         //add new account
         else if(event.getSource() == btnAddAcc) {
-
+            String accName = txfNewAccName.getText();
+            DB.newAccount(user, accName);
         }
         //remove existing account
         else if(event.getSource() == btnRemoveAcc) {
