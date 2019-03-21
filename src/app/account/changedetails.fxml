@@ -6,13 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.account.DetailsController">
+<AnchorPane prefHeight="631.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.account.DetailsController">
    <children>
-      <ChoiceBox layoutX="143.0" layoutY="93.0" prefWidth="150.0" />
+      <ChoiceBox id="dropAccName" layoutX="143.0" layoutY="93.0" prefWidth="150.0" />
       <Label layoutX="82.0" layoutY="50.0" text="Change account name" />
       <Label layoutX="82.0" layoutY="99.0" text="Select:" />
-      <TextField layoutX="323.0" layoutY="93.0" promptText="new name" />
-      <Button layoutX="323.0" layoutY="161.0" mnemonicParsing="false" text="Submit" />
+      <TextField id="txfAccName" layoutX="323.0" layoutY="93.0" promptText="new name" />
+      <Button id="btnAccName" layoutX="323.0" layoutY="161.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="89.0" text="Submit" />
+      <Label layoutX="82.0" layoutY="260.0" text="Add a new account" />
+      <Label layoutX="82.0" layoutY="302.0" text="Name for your account" />
+      <Label layoutX="82.0" layoutY="425.0" text="Remove an existing account" />
+      <Label layoutX="82.0" layoutY="474.0" text="Select" />
+      <ChoiceBox id="dropRemoveAcc" layoutX="143.0" layoutY="468.0" prefWidth="150.0" />
+      <Button id="btnRemoveAcc" layoutX="325.0" layoutY="530.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="89.0" text="Remove" />
+      <Label layoutX="325.0" layoutY="474.0" text="Account successfully removed!" visible="false" />
+      <Button id="btnAddAcc" layoutX="325.0" layoutY="369.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="89.0" text="Add" />
+      <TextField layoutX="323.0" layoutY="296.0" promptText="account name" />
    </children>
 </AnchorPane>
