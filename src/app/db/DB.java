@@ -67,6 +67,17 @@ public abstract class DB {
         return result;
     }
 
+    public static void changeAccName(int account, String newName) {
+        PreparedStatement ps = prep("UPDATE accounts SET accname = ? WHERE accno = ?");
+        try {
+            ps.setString(1, newName);
+            ps.setInt(2, account);
+            ps.executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
 
     /*
         Example method with default parameters
