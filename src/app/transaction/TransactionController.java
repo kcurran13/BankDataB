@@ -6,21 +6,22 @@ import app.db.DB;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.sql.SQLException;
+
 public class TransactionController {
 
-    @FXML Label message;
-    @FXML Label amount;
-    @FXML Label date;
+    @FXML Label receiver, amount, date, newBalance;
 
     @FXML
-    private void initialize(){
+    private void initialize() throws SQLException {
         System.out.println("initialize transaction");
-        DB.changeBalance(3000, 11223344,  111);
+        DB.getTransactions(11223344);
     }
 
     public void setTransaction(Transaction transaction) {
-        message.setText(transaction.getMessage());
-        // etc
-        // etc
+        receiver.setText(transaction.getReceiver());
+        amount.setText(String.valueOf(transaction.getAmount()));
+        date.setText(transaction.getDateAsString());
+        //newBalance.setText(String.valueOf(transaction.getNewBalance));
     }
 }

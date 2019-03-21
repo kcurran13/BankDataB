@@ -1,11 +1,16 @@
 package app.db;
 
+import app.Entities.Transaction;
 import app.Entities.User;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Observable;
 
 import static javax.swing.UIManager.getString;
 
@@ -67,20 +72,22 @@ public abstract class DB {
         return result;
     }
 
+    /*public static List<Transaction> getTransactions(int accountId){
+        return getTransactions(accountId, 0, 10); }
 
-    /*
-        Example method with default parameters
-    public static List<Transaction> getTransactions(int accountId){ return getTransactions(accountId, 0, 10); }
-    public static List<Transaction> getTransactions(int accountId, int offset){ return getTransactions(accountId, offset, offset + 10); }
-    public static List<Transaction> getTransactions(int accountId, int offset, int limit){
+    public static List<Transaction> getTransactions(int accountId, int offset){
+        return getTransactions(accountId, offset, offset + 10); }*/
+
+    public static List<Transaction> getTransactions(int accountId){
         List<Transaction> result = null;
-        PreparedStatement ps = prep("bla bla from transactions WHERE account-id = "+accountId+" OFFSET "+offset+" LIMIT "+limit);
+        PreparedStatement ps = prep("SELECT date, receiver, transamount FROM transactions WHERE accno = ?");
+
         try {
-            result = (List<Transaction>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
+            ps.setInt(1, accountId);
+
+            result = (List<Transaction>)(List<?>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
+
         } catch (Exception e) { e.printStackTrace(); }
         return result; // return User;
     }
-    */
-
-
 }
