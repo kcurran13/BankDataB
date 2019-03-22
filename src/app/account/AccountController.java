@@ -47,6 +47,11 @@ public class AccountController {
 
         dropAcc.setItems(data);
         dropAcc.getSelectionModel().select(0);
+
+        dropAcc.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
+            transactionBox.getChildren().clear();
+            loadMoreTransactions();
+        });
         loadMoreTransactions();
     }
 
