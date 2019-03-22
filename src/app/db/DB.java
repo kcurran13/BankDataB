@@ -134,8 +134,6 @@ public abstract class DB {
     public static List<Transaction> getTransactions(int accountId){
         return getTransactions(accountId, 0, 10); }
 
-
-
     public static List<Transaction> getTransactions(int accountId, int offset){
         return getTransactions(accountId, offset, offset + 10); }
 
@@ -148,7 +146,6 @@ public abstract class DB {
             ps.setInt(1, accountId);
 
             result = (List<Transaction>)(List<?>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
-
 
         } catch (Exception e) { e.printStackTrace(); }
         return result; // return User;

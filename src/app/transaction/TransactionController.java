@@ -15,7 +15,6 @@ public class TransactionController {
     @FXML
     private void initialize() throws SQLException {
         System.out.println("initialize transaction");
-        DB.getTransactions(11223344);
     }
 
     public void setTransaction(Transaction transaction) {
