@@ -131,19 +131,21 @@ public abstract class DB {
         }
     }
 
-    public static List<Transaction> getTransactions(int accountId){
-        return getTransactions(accountId, 0, 10); }
+    public static List<Transaction> getTransactions(String accountId){
+        return getTransactions(accountId, 10, 0); }
 
-    public static List<Transaction> getTransactions(int accountId, int offset){
-        return getTransactions(accountId, offset, offset + 10); }
+    public static List<Transaction> getTransactions(String accountId, int offset){
+        return getTransactions(accountId, offset + 10, offset); }
 
 
-    public static List<Transaction> getTransactions(int accountId, int offset, int limit){
+    public static List<Transaction> getTransactions(String accountId, int limit, int offset){
         List<Transaction> result = null;
-        PreparedStatement ps = prep("SELECT date, receiver, transamount FROM transactions WHERE accno = ?");
+        PreparedStatement ps = prep("SELECT date, receiver, transamount FROM transactions WHERE accno = ? LIMIT ? OFFSET ?");
 
         try {
-            ps.setInt(1, accountId);
+            ps.setString(1, accountId);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
 
             result = (List<Transaction>)(List<?>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
 

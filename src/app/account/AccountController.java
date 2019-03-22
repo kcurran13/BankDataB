@@ -26,7 +26,8 @@ public class AccountController {
     @FXML VBox transactionBox;
     @FXML ChoiceBox dropAcc;
     private User user;
-    ResultSet rs;
+    private ResultSet rs;
+    private int offset = 0;
 
     @FXML
     private void initialize() {
@@ -50,14 +51,21 @@ public class AccountController {
 
         dropAcc.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> {
             transactionBox.getChildren().clear();
-            loadMoreTransactions();
+            loadTransactions();
         });
-        loadMoreTransactions();
+        loadTransactions();
+    }
+
+    void loadTransactions() {
+        String accNo = getChoiceBoxText(dropAcc);
+        List<Transaction> transactions = DB.getTransactions(accNo);
+        displayTransaction(transactions);
     }
 
     void loadMoreTransactions() {
-        int accNo = Integer.valueOf(getChoiceBoxText(dropAcc));
-        List<Transaction> transactions = DB.getTransactions(accNo);
+        String accNo = getChoiceBoxText(dropAcc);
+        offset += 10;
+        List<Transaction> transactions = DB.getTransactions(accNo, offset);
         displayTransaction(transactions);
     }
 

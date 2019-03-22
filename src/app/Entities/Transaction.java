@@ -17,6 +17,8 @@ public class Transaction {
     private double amount;
     @Column ("Date")
     private java.sql.Timestamp date;
+    @Column ( "Balance")
+    private double newBalance;
 
     public String getAccNo() {return accNo;}
 
@@ -32,5 +34,9 @@ public class Transaction {
     }*/
     public String getDateAsString() {
         return "2018-03-22";
+    }
+
+    public double getNewBalance() {
+        return newBalance;
     }
 }
