@@ -6,13 +6,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.account.DetailsController">
+<AnchorPane prefHeight="631.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.account.DetailsController">
    <children>
-      <ChoiceBox layoutX="143.0" layoutY="93.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="dropAccName" layoutX="143.0" layoutY="93.0" prefWidth="150.0" />
       <Label layoutX="82.0" layoutY="50.0" text="Change account name" />
       <Label layoutX="82.0" layoutY="99.0" text="Select:" />
-      <TextField layoutX="323.0" layoutY="93.0" promptText="new name" />
-      <Button layoutX="323.0" layoutY="161.0" mnemonicParsing="false" text="Submit" />
+      <TextField fx:id="txfChangeName" layoutX="323.0" layoutY="93.0" promptText="new name" />
+      <Button fx:id="btnAccName" layoutX="323.0" layoutY="161.0" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Submit" />
+      <Label layoutX="82.0" layoutY="260.0" text="Add a new account" />
+      <Label layoutX="82.0" layoutY="302.0" text="Name for your account" />
+      <Label layoutX="82.0" layoutY="425.0" text="Remove an existing account" />
+      <Label layoutX="82.0" layoutY="474.0" text="Select" />
+      <ChoiceBox fx:id="dropRemoveAcc" layoutX="143.0" layoutY="468.0" prefWidth="150.0" />
+      <Button fx:id="btnRemoveAcc" layoutX="325.0" layoutY="530.0" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Remove" />
+      <Label fx:id="lblAccRemoved" layoutX="456.0" layoutY="536.0" text="Account successfully removed!" visible="false" />
+      <Button fx:id="btnAddAcc" layoutX="325.0" layoutY="369.0" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Add" />
+      <TextField fx:id="txfNewAccName" layoutX="323.0" layoutY="296.0" promptText="account name" />
+      <Label fx:id="lblNameChanged" layoutX="456.0" layoutY="167.0" text="Name successfully changed!" visible="false" />
+      <Label fx:id="lblAccCreated" layoutX="456.0" layoutY="375.0" text="Account successfully created!" visible="false" />
    </children>
 </AnchorPane>

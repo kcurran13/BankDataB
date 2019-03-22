@@ -12,7 +12,7 @@
     <children>
         <Button mnemonicParsing="false" onAction="#goToAccount" prefHeight="39.0" prefWidth="170.0" text="View my accounts" />
         <Button mnemonicParsing="false" onAction="#goToTransfers" prefHeight="39.0" prefWidth="170.0" text="Transfer Funds" GridPane.rowIndex="4" />
-        <Button mnemonicParsing="false" onAction="#goToChangeDetails" prefHeight="39.0" prefWidth="170.0" text="Change Details" GridPane.rowIndex="2" />
+        <Button mnemonicParsing="false" onAction="#goToChangeDetails" prefHeight="39.0" prefWidth="170.0" text="Edit Accounts" GridPane.rowIndex="2" />
     </children>
     <columnConstraints>
         <ColumnConstraints />
