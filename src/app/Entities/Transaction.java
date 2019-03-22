@@ -24,6 +24,6 @@ public class Transaction {
         return getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace('T', ' ');
     }*/
     public String getDateAsString() {
-        return "19901012";
+        return "2018-03-22";
     }
 }

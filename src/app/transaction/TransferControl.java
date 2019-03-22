@@ -23,9 +23,9 @@ public class TransferControl {
 
     User user;
     double transferAmt;
-    int accountNo;
+    String receiverAcc = null;
     int clearingNo;
-    int fromAccNo;
+    String fromAccNo;
     static ResultSet rs;
 
     @FXML
@@ -49,26 +49,26 @@ public class TransferControl {
     }
 
     @FXML
-    private void getTransferText(ActionEvent event) {
+    private void getTransferText() {
         transferAmt = Integer.valueOf(txfAmount.getText());
         clearingNo = Integer.valueOf(txfClearing.getText());
-        accountNo = Integer.valueOf(txfAccount.getText());
+        receiverAcc = txfAccount.getText();
         //listener for choicebox
-        fromAccNo = Integer.valueOf(getChoiceBoxText(dropFromAcc));
+        fromAccNo = String.valueOf(getChoiceBoxText(dropFromAcc));
 
-        DB.changeBalance(3000, fromAccNo, (transferAmt*-1));
-        DB.changeBalance(clearingNo, accountNo, transferAmt);
+        DB.changeBalance(3000, fromAccNo, (transferAmt*-1), receiverAcc);
+        DB.changeBalance(clearingNo, receiverAcc, transferAmt, fromAccNo);
     }
 
     @FXML
     private void getChangeBalanceText(ActionEvent event) {
         transferAmt = Integer.valueOf(txfTestAmount.getText());
-        fromAccNo = Integer.valueOf(getChoiceBoxText(dropTestAcc));
+        fromAccNo = getChoiceBoxText(dropTestAcc);
 
         if(event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
-        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt))));
+        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt, receiverAcc))));
     }
 
     @FXML

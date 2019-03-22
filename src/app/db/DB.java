@@ -37,14 +37,14 @@ public abstract class DB {
         return result; // return User;
     }
 
-    public static double changeBalance(int clearingNo, int accNo, double amount) {
+    public static double changeBalance(int clearingNo, String fromAccNo, double amount, String receiverAcc) {
         double newBalance = 0;
 
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ? AND ClearingNo = ?");
         PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE AccNo = ? AND ClearingNo = ?");
 
         try {
-            ps.setInt(1, accNo);
+            ps.setString(1, fromAccNo);
             ps.setInt(2, clearingNo);
             ResultSet result = ps.executeQuery();
 
@@ -52,7 +52,7 @@ public abstract class DB {
                 newBalance = (result.getLong("balance") + amount);
                 if (newBalance >= 0) {
                     ps2.setDouble(1, newBalance);
-                    ps2.setInt(2, accNo);
+                    ps2.setString(2, fromAccNo);
                     ps2.setInt(3, clearingNo);
                     ps2.executeUpdate();
                 } else {
@@ -62,7 +62,23 @@ public abstract class DB {
         } catch (Exception e) {
             System.out.println(e);
         }
+        createTransaction(fromAccNo, "2018-03-22", amount, receiverAcc);
         return newBalance;
+    }
+
+    public static void createTransaction(String accNo, String date, double amount, String receiver) {
+        PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?)");
+
+        try {
+            ps.setString(1, accNo);
+            ps.setString(2, date);
+            ps.setDouble(3, amount);
+            ps.setString(4, receiver);
+
+            ps.executeUpdate();
+        }catch(Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static ResultSet getUserAccounts(User user) throws SQLException {
@@ -132,6 +148,7 @@ public abstract class DB {
             ps.setInt(1, accountId);
 
             result = (List<Transaction>)(List<?>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
+
 
         } catch (Exception e) { e.printStackTrace(); }
         return result; // return User;
