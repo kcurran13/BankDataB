@@ -2,6 +2,7 @@ package app.account;
 
 import app.Entities.User;
 import app.db.DB;
+import app.home.HomeController;
 import app.login.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,4 +77,5 @@ public class DetailsController {
         String acc = box.getValue();
         return acc;
     }
+
 }

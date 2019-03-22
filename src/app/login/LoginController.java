@@ -70,6 +70,6 @@ public class LoginController {
         }
     }
 
-    @FXML void goToHome() { switchScene("/app/home/home.fxml"); }
+    @FXML public void goToHome() { switchScene("/app/home/home.fxml"); }
 
 }
