@@ -3,19 +3,26 @@ package app.Entities;
 
 import app.annotations.Column;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Transaction {
-    @Column
-    private long id;
-    @Column
+    @Column ("AccNo")
+    private String accNo;
+    @Column ("Receiver")
     private String receiver;
-    @Column
-    private float amount;
-    @Column
+    @Column ("TransAmount")
+    private double amount;
+    @Column ("Date")
     private java.sql.Timestamp date;
+
+    public String getAccNo() {return accNo;}
 
     public String getReceiver() { return receiver; }
 
-    public float getAmount() { return amount; }
+    public double getAmount() { return amount; }
 
     /*public ZonedDateTime getDate() {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.of("Europe/Berlin"));

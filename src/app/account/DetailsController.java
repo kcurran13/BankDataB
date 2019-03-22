@@ -44,7 +44,9 @@ public class DetailsController {
         }
 
         dropAccName.setItems(data);
+        dropAccName.getSelectionModel().select(0);
         dropRemoveAcc.setItems(data);
+        dropRemoveAcc.getSelectionModel().select(0);
     }
 
     @FXML
