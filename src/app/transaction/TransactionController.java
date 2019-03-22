@@ -21,6 +21,6 @@ public class TransactionController {
         receiver.setText(transaction.getReceiver());
         amount.setText(String.valueOf(transaction.getAmount()));
         date.setText(transaction.getDateAsString());
-        //newBalance.setText(String.valueOf(transaction.getNewBalance));
+        newBalance.setText(String.valueOf(transaction.getNewBalance()));
     }
 }
