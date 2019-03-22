@@ -2,60 +2,43 @@ package app.home;
 
 import app.Main;
 import app.login.LoginController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 
 public class HomeController {
 
-    @FXML
-    void initialize(){
-        // load accounts from db using LoginController.user.getId() and display them
-        LoginController.getUser();
+    @FXML Button btnAccount, btnTransfer, btnDetails;
 
+    @FXML
+    void initialize() {
+        System.out.println("initializing home controller");
     }
 
     @FXML
-    void goToAccount() throws IOException {
+    void changeScene(ActionEvent event) throws IOException {
+        String pathname = null;
 
-        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/app/account/account.fxml" ) );
+        if(event.getSource() == btnAccount) {
+            pathname = "/app/account/account.fxml";
+        }
+        else if(event.getSource() == btnTransfer) {
+            pathname = "/app/transaction/transfer.fxml";
+        }
+        else if(event.getSource() == btnDetails) {
+            pathname = "/app/account/changedetails.fxml";
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(pathname));
         Parent fxmlInstance = loader.load();
-        Scene scene = new Scene( fxmlInstance, 800, 600 );
-
-        // Make sure that you display "the correct account" based on which one you clicked on
-//            AccountController controller = loader.getController();
-//            controller.setAccount(accountFromDB);
-
-        // If you don't want to have/use the static variable Main.stage
-//        Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
-        Main.stage.setScene(scene);
-        Main.stage.show();
-
-    }
-
-    @FXML
-    void goToTransfers() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/app/transaction/transfer.fxml" ) );
-        Parent fxmlInstance = loader.load();
-        Scene scene = new Scene( fxmlInstance, 800, 600 );
+        Scene scene = new Scene(fxmlInstance, 800, 600);
 
         Main.stage.setScene(scene);
         Main.stage.show();
     }
-
-    @FXML
-    void goToChangeDetails() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader( getClass().getResource("/app/account/changedetails.fxml") );
-        Parent fxmlInstance = loader.load();
-        Scene scene = new Scene( fxmlInstance, 800, 600 );
-
-        Main.stage.setScene(scene);
-        Main.stage.show();
-    }
-
 }
