@@ -1,6 +1,5 @@
 package app.transaction;
 
-
 import app.Entities.User;
 import app.db.DB;
 import app.login.LoginController;
@@ -14,6 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.FieldPosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TransferControl {
     @FXML TextField txfClearing, txfAccount, txfAmount, txfTestAmount;
@@ -21,12 +23,13 @@ public class TransferControl {
     @FXML Label lblTextBalance;
     @FXML Button btnWithdraw, btnDeposit;
 
-    User user;
-    double transferAmt;
-    String receiverAcc = null;
-    int clearingNo;
-    String fromAccNo;
-    static ResultSet rs;
+    private User user;
+    private double transferAmt;
+    private String receiverAcc = null;
+    private int clearingNo;
+    private String fromAccNo;
+    private static ResultSet rs;
+    String date;
 
     @FXML
     private void initialize(){
@@ -55,20 +58,22 @@ public class TransferControl {
         receiverAcc = txfAccount.getText();
         //listener for choicebox
         fromAccNo = String.valueOf(getChoiceBoxText(dropFromAcc));
+        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
-        DB.changeBalance(3000, fromAccNo, (transferAmt*-1), receiverAcc);
-        DB.changeBalance(clearingNo, receiverAcc, transferAmt, fromAccNo);
+        DB.changeBalance(3000, fromAccNo, (transferAmt*-1), receiverAcc, date);
+        DB.changeBalance(clearingNo, receiverAcc, transferAmt, fromAccNo, date);
     }
 
     @FXML
     private void getChangeBalanceText(ActionEvent event) {
         transferAmt = Integer.valueOf(txfTestAmount.getText());
         fromAccNo = getChoiceBoxText(dropTestAcc);
+        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
         if(event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
-        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt, receiverAcc))));
+        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt, receiverAcc, date))));
     }
 
     @FXML
@@ -76,4 +81,5 @@ public class TransferControl {
         String acc = box.getValue();
         return acc;
     }
+
 }

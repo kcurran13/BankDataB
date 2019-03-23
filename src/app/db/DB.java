@@ -19,6 +19,7 @@ import static javax.swing.UIManager.getString;
  * A Helper class for interacting with the Database using short-commands
  */
 public abstract class DB {
+    Transaction t;
 
     public static PreparedStatement prep(String SQLQuery) {
         return Database.getInstance().prepareStatement(SQLQuery);
@@ -37,7 +38,7 @@ public abstract class DB {
         return result; // return User;
     }
 
-    public static double changeBalance(int clearingNo, String fromAccNo, double amount, String receiverAcc) {
+    public static double changeBalance(int clearingNo, String fromAccNo, double amount, String receiverAcc, String date) {
         double newBalance = 0;
 
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ? AND ClearingNo = ?");
@@ -60,20 +61,23 @@ public abstract class DB {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
-        createTransaction(fromAccNo, "2018-03-22", amount, receiverAcc);
+        createTransaction(fromAccNo, date , amount, receiverAcc);
         return newBalance;
     }
 
     public static void createTransaction(String accNo, String date, double amount, String receiver) {
-        PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?)");
+        String balance = "10";
+        System.out.println("in create");
+        PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?,?)");
 
         try {
             ps.setString(1, accNo);
             ps.setString(2, date);
             ps.setDouble(3, amount);
             ps.setString(4, receiver);
+            ps.setString(5,balance);
 
             ps.executeUpdate();
         }catch(Exception e) {
@@ -103,7 +107,6 @@ public abstract class DB {
     public static void newAccount(User user, String accName) {
         Random random = new Random();
         String id = String.format("%08d", random.nextInt(99999999));
-        System.out.println(id);
 
         PreparedStatement ps = prep("INSERT INTO accounts VALUES (?,?,?,?,?)");
         try {
@@ -140,7 +143,7 @@ public abstract class DB {
 
     public static List<Transaction> getTransactions(String accountId, int limit, int offset){
         List<Transaction> result = null;
-        PreparedStatement ps = prep("SELECT date, receiver, transamount FROM transactions WHERE accno = ? LIMIT ? OFFSET ?");
+        PreparedStatement ps = prep("SELECT date, transamount, receiver FROM transactions WHERE accno = ? LIMIT ? OFFSET ?");
 
         try {
             ps.setString(1, accountId);
@@ -149,7 +152,8 @@ public abstract class DB {
 
             result = (List<Transaction>)(List<?>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
 
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            System.out.println(e);; }
         return result; // return User;
     }
 }

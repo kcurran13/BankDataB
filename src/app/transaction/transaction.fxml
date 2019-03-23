@@ -10,8 +10,8 @@
         <BorderPane />
         <HBox spacing="60.0">
             <children>
-                <Label fx:id="receiver" text="Receiver" />
                 <Label fx:id="date" text="Date" />
+                <Label fx:id="receiver" text="Receiver" />
                 <Label fx:id="amount" text="Amount" />
                 <Label fx:id="newBalance" text="New balance" />
             </children>
