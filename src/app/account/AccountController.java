@@ -6,6 +6,7 @@ import app.Entities.User;
 import app.db.DB;
 import app.login.LoginController;
 import app.transaction.TransactionController;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -57,12 +58,14 @@ public class AccountController {
     }
 
     void loadTransactions() {
+        System.out.println("in load1");
         String accNo = getChoiceBoxText(dropAcc);
         List<Transaction> transactions = DB.getTransactions(accNo);
         displayTransaction(transactions);
     }
 
     void loadMoreTransactions() {
+        System.out.println("int load2");
         String accNo = getChoiceBoxText(dropAcc);
         offset += 10;
         List<Transaction> transactions = DB.getTransactions(accNo, offset);
@@ -70,6 +73,7 @@ public class AccountController {
     }
 
     void displayTransaction(List<Transaction> transactions) {
+        System.out.println("in display");
         // For every app.transaction, do the following:
         for (Transaction t : transactions)
             try {

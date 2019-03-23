@@ -79,7 +79,7 @@ public abstract class DB {
     }
 
     public static ResultSet getUserAccounts(User user) throws SQLException {
-        PreparedStatement ps = prep("SELECT AccName FROM accounts WHERE AccOwner = ?");
+        PreparedStatement ps = prep("SELECT AccNo FROM accounts WHERE AccOwner = ?");
 
         ps.setLong(1, user.getUserId());
         ResultSet result = ps.executeQuery();
