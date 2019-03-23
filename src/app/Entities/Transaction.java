@@ -26,14 +26,12 @@ public class Transaction {
 
     public double getAmount() { return amount; }
 
-    /*public ZonedDateTime getDate() {
+    public ZonedDateTime getDate() {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.of("Europe/Berlin"));
     }
+
     public String getDateAsString(){
         return getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace('T', ' ');
-    }*/
-    public String getDateAsString() {
-        return "2018-03-22";
     }
 
     public double getNewBalance() {
