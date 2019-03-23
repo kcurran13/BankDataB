@@ -1,25 +1,18 @@
 package app.db;
 
+
 import app.Entities.Transaction;
 import app.Entities.User;
-import javafx.collections.ObservableList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
 import java.util.Random;
-
-import static javax.swing.UIManager.getString;
 
 /**
  * A Helper class for interacting with the Database using short-commands
  */
 public abstract class DB {
-    Transaction t;
 
     public static PreparedStatement prep(String SQLQuery) {
         return Database.getInstance().prepareStatement(SQLQuery);
@@ -86,7 +79,7 @@ public abstract class DB {
     }
 
     public static ResultSet getUserAccounts(User user) throws SQLException {
-        PreparedStatement ps = prep("SELECT AccNo FROM accounts WHERE AccOwner = ?");
+        PreparedStatement ps = prep("SELECT AccName FROM accounts WHERE AccOwner = ?");
 
         ps.setLong(1, user.getUserId());
         ResultSet result = ps.executeQuery();

@@ -2,18 +2,15 @@ package app.transaction;
 
 
 import app.Entities.Transaction;
-import app.db.DB;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
-import java.sql.SQLException;
 
 public class TransactionController {
 
     @FXML Label receiver, amount, date, newBalance;
 
     @FXML
-    private void initialize() throws SQLException {
+    private void initialize(){
         System.out.println("initialize transaction");
     }
 
