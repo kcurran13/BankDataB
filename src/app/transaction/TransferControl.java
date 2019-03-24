@@ -1,5 +1,6 @@
 package app.transaction;
 
+
 import app.Entities.User;
 import app.db.DB;
 import app.login.LoginController;
@@ -13,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
