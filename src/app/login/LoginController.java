@@ -4,57 +4,55 @@ package app.login;
 import app.Entities.User;
 import app.Main;
 import app.db.DB;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.event.ActionEvent;
-
 import javafx.scene.control.*;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class LoginController {
 
-    @FXML TextField txfUser;
-    @FXML TextField txfPass;
-    @FXML Button btnSubmit;
-    @FXML Label lblLoginError;
+    @FXML
+    TextField txfUser;
+    @FXML
+    TextField txfPass;
+    @FXML
+    Button btnSubmit;
+    @FXML
+    Label lblLoginError;
 
     private String userName;
     private String pass;
-
-    // Use this in other Controllers to get "the currently logged in user".
     private static User user = null;
-    public static User getUser() {
-        return user; }
 
-    @FXML
-    private void initialize() {
-        System.out.println("initialize login");
+    public static User getUser() {
+        return user;
     }
 
     @FXML
-    private void getUserText(ActionEvent event) {
-            userName = txfUser.getText();
-            pass = txfPass.getText();
+    private void initialize() {
+    }
+
+    @FXML
+    private void getUserText() {
+        userName = txfUser.getText();
+        pass = txfPass.getText();
         loadUser(userName, pass);
     }
 
     @FXML
-    private void loadUser(String userName, String pass){
+    private void loadUser(String userName, String pass) {
         try {
             user = DB.getMatchingUser(userName, pass);
         } catch (Exception e) {
             System.out.println(e);
         }
-        if(user == null) {
+        if (user == null) {
             lblLoginError.setVisible(true);
-        }
-        else {
+        } else {
             goToHome();
         }
     }
@@ -70,6 +68,9 @@ public class LoginController {
         }
     }
 
-    @FXML public void goToHome() { switchScene("/app/home/home.fxml"); }
+    @FXML
+    public void goToHome() {
+        switchScene("/app/home/home.fxml");
+    }
 
 }

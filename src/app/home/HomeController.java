@@ -1,7 +1,6 @@
 package app.home;
 
 import app.Main;
-import app.login.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,9 +15,7 @@ public class HomeController {
     @FXML Button btnAccount, btnTransfer, btnDetails;
 
     @FXML
-    void initialize() {
-        System.out.println("initializing home controller");
-    }
+    void initialize(){}
 
     @FXML
     void changeScene(ActionEvent event) throws IOException {

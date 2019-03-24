@@ -1,19 +1,22 @@
 package app.db;
 
+
+import app.Entities.Transaction;
 import app.Entities.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-
-import static javax.swing.UIManager.getString;
 
 /**
  * A Helper class for interacting with the Database using short-commands
  */
 public abstract class DB {
+    private static double newBalance;
 
     public static PreparedStatement prep(String SQLQuery) {
         return Database.getInstance().prepareStatement(SQLQuery);
@@ -29,17 +32,15 @@ public abstract class DB {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result; // return User;
+        return result;
     }
 
-    public static double changeBalance(int clearingNo, int accNo, double amount) {
-        double newBalance = 0;
-
+    public static double changeBalance(int clearingNo, String fromAccNo, double amount, String receiverAcc, String date) {
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ? AND ClearingNo = ?");
         PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE AccNo = ? AND ClearingNo = ?");
 
         try {
-            ps.setInt(1, accNo);
+            ps.setString(1, fromAccNo);
             ps.setInt(2, clearingNo);
             ResultSet result = ps.executeQuery();
 
@@ -47,7 +48,7 @@ public abstract class DB {
                 newBalance = (result.getLong("balance") + amount);
                 if (newBalance >= 0) {
                     ps2.setDouble(1, newBalance);
-                    ps2.setInt(2, accNo);
+                    ps2.setString(2, fromAccNo);
                     ps2.setInt(3, clearingNo);
                     ps2.executeUpdate();
                 } else {
@@ -55,17 +56,46 @@ public abstract class DB {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
+        createTransaction(fromAccNo, date, amount, receiverAcc, newBalance);
         return newBalance;
     }
 
-    public static ResultSet getUserAccounts(User user) throws SQLException {
-        PreparedStatement ps = prep("SELECT AccNo FROM accounts WHERE AccOwner = ?");
+    public static void createTransaction(String accNo, String date, double amount, String receiver, double newBalance) {
+        PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?,?)");
+
+        try {
+            ps.setString(1, accNo);
+            ps.setString(2, date);
+            ps.setDouble(3, amount);
+            ps.setString(4, receiver);
+            ps.setString(5, String.valueOf(newBalance));
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static ObservableList<String> getUserAccounts(User user) throws SQLException {
+        PreparedStatement ps = prep("SELECT accno, accname FROM accounts WHERE AccOwner = ?");
+        ObservableList<String> data = FXCollections.observableArrayList();
 
         ps.setLong(1, user.getUserId());
-        ResultSet result = ps.executeQuery();
-        return result;
+        try {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String number = rs.getString(1);
+                String name = rs.getString(2);
+                data.add(number + "-" + name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(data);
+        return data;
     }
 
     public static void changeAccName(String account, String newName) {
@@ -74,8 +104,7 @@ public abstract class DB {
             ps.setString(1, newName);
             ps.setString(2, account);
             ps.executeUpdate();
-
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -83,10 +112,9 @@ public abstract class DB {
     public static void newAccount(User user, String accName) {
         Random random = new Random();
         String id = String.format("%08d", random.nextInt(99999999));
-        System.out.println(id);
 
         PreparedStatement ps = prep("INSERT INTO accounts VALUES (?,?,?,?,?)");
-        try{
+        try {
             ps.setString(1, id);
             //3000 is always the clearing no for this bank
             ps.setInt(2, 3000);
@@ -95,7 +123,7 @@ public abstract class DB {
             ps.setString(5, accName);
 
             ps.executeUpdate();
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -106,24 +134,33 @@ public abstract class DB {
         try {
             ps.setString(1, accNo);
             ps.executeUpdate();
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    /*
-        Example method with default parameters
-    public static List<Transaction> getTransactions(int accountId){ return getTransactions(accountId, 0, 10); }
-    public static List<Transaction> getTransactions(int accountId, int offset){ return getTransactions(accountId, offset, offset + 10); }
-    public static List<Transaction> getTransactions(int accountId, int offset, int limit){
-        List<Transaction> result = null;
-        PreparedStatement ps = prep("bla bla from transactions WHERE account-id = "+accountId+" OFFSET "+offset+" LIMIT "+limit);
-        try {
-            result = (List<Transaction>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
-        } catch (Exception e) { e.printStackTrace(); }
-        return result; // return User;
+    public static List<Transaction> getTransactions(String accountId) {
+        return getTransactions(accountId, 10, 0);
     }
-    */
 
+    public static List<Transaction> getTransactions(String accountId, int offset) {
+        return getTransactions(accountId, offset + 10, offset);
+    }
 
+    public static List<Transaction> getTransactions(String accountId, int limit, int offset) {
+        List<Transaction> result = null;
+        PreparedStatement ps = prep("SELECT date, transamount, receiver, balance FROM transactions WHERE accno = ? LIMIT ? OFFSET ?");
+
+        try {
+            ps.setString(1, accountId);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+
+            result = (List<Transaction>) (List<?>) new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return result;
+    }
 }
