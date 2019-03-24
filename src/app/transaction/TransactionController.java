@@ -10,9 +10,7 @@ public class TransactionController {
     @FXML Label receiver, amount, date, newBalance;
 
     @FXML
-    private void initialize(){
-        System.out.println("initialize transaction");
-    }
+    private void initialize(){}
 
     public void setTransaction(Transaction transaction) {
         receiver.setText(transaction.getReceiver());

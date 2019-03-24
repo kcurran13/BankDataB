@@ -13,6 +13,7 @@ import java.util.Random;
  * A Helper class for interacting with the Database using short-commands
  */
 public abstract class DB {
+    private static double newBalance;
 
     public static PreparedStatement prep(String SQLQuery) {
         return Database.getInstance().prepareStatement(SQLQuery);
@@ -32,7 +33,7 @@ public abstract class DB {
     }
 
     public static double changeBalance(int clearingNo, String fromAccNo, double amount, String receiverAcc, String date) {
-        double newBalance = 0;
+        newBalance = 0;
 
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ? AND ClearingNo = ?");
         PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE AccNo = ? AND ClearingNo = ?");
@@ -56,13 +57,11 @@ public abstract class DB {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createTransaction(fromAccNo, date , amount, receiverAcc);
+        createTransaction(fromAccNo, date , amount, receiverAcc, newBalance);
         return newBalance;
     }
 
-    public static void createTransaction(String accNo, String date, double amount, String receiver) {
-        String balance = "10";
-        System.out.println("in create");
+    public static void createTransaction(String accNo, String date, double amount, String receiver, double newBalance) {
         PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?,?)");
 
         try {
@@ -70,7 +69,7 @@ public abstract class DB {
             ps.setString(2, date);
             ps.setDouble(3, amount);
             ps.setString(4, receiver);
-            ps.setString(5,balance);
+            ps.setString(5, String.valueOf(newBalance));
 
             ps.executeUpdate();
         }catch(Exception e) {
@@ -136,7 +135,7 @@ public abstract class DB {
 
     public static List<Transaction> getTransactions(String accountId, int limit, int offset){
         List<Transaction> result = null;
-        PreparedStatement ps = prep("SELECT date, transamount, receiver FROM transactions WHERE accno = ? LIMIT ? OFFSET ?");
+        PreparedStatement ps = prep("SELECT date, transamount, receiver, balance FROM transactions WHERE accno = ? LIMIT ? OFFSET ?");
 
         try {
             ps.setString(1, accountId);
@@ -146,7 +145,7 @@ public abstract class DB {
             result = (List<Transaction>)(List<?>)new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
 
         } catch (Exception e) {
-            System.out.println(e);; }
-        return result; // return User;
+            System.out.println(e); }
+        return result;
     }
 }
