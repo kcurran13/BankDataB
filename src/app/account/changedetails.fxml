@@ -1,26 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="631.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.account.DetailsController">
    <children>
-      <ChoiceBox fx:id="dropAccName" layoutX="143.0" layoutY="93.0" prefWidth="150.0" />
-      <Label layoutX="82.0" layoutY="50.0" text="Change account name" />
-      <Label layoutX="82.0" layoutY="99.0" text="Select:" />
-      <TextField fx:id="txfChangeName" layoutX="323.0" layoutY="93.0" promptText="new name" />
-      <Button fx:id="btnAccName" layoutX="323.0" layoutY="161.0" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Submit" />
-      <Label layoutX="82.0" layoutY="260.0" text="Add a new account" />
-      <Label layoutX="82.0" layoutY="302.0" text="Name for your account" />
-      <Label layoutX="82.0" layoutY="425.0" text="Remove an existing account" />
-      <Label layoutX="82.0" layoutY="474.0" text="Select" />
-      <ChoiceBox fx:id="dropRemoveAcc" layoutX="143.0" layoutY="468.0" prefWidth="150.0" />
-      <Button fx:id="btnRemoveAcc" layoutX="325.0" layoutY="530.0" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Remove" />
+      <Label layoutX="110.0" layoutY="50.0" text="Change account name">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <Label layoutX="110.0" layoutY="202.0" text="Add a new account">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <Label layoutX="110.0" layoutY="360.0" text="Remove an existing account">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
       <Label fx:id="lblAccRemoved" layoutX="456.0" layoutY="536.0" text="Account successfully removed!" visible="false" />
-      <Button fx:id="btnAddAcc" layoutX="325.0" layoutY="369.0" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Add" />
-      <TextField fx:id="txfNewAccName" layoutX="323.0" layoutY="296.0" promptText="account name" />
       <Label fx:id="lblNameChanged" layoutX="456.0" layoutY="167.0" text="Name successfully changed!" visible="false" />
       <Label fx:id="lblAccCreated" layoutX="456.0" layoutY="375.0" text="Account successfully created!" visible="false" />
+      <GridPane layoutX="113.0" layoutY="80.0" prefHeight="122.0" prefWidth="686.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="139.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="307.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="267.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Select:" />
+            <ChoiceBox fx:id="dropAccName" prefHeight="39.0" prefWidth="194.0" GridPane.columnIndex="1" />
+            <TextField fx:id="txfChangeName" prefHeight="39.0" prefWidth="150.0" promptText="new name" GridPane.columnIndex="2" />
+            <Button fx:id="btnAccName" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Submit" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="113.0" layoutY="232.0" prefHeight="130.0" prefWidth="424.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="133.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="291.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Account Name" />
+            <TextField fx:id="txfNewAccName" prefHeight="39.0" prefWidth="224.0" promptText="account name" GridPane.columnIndex="1" />
+            <Button fx:id="btnAddAcc" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="108.0" layoutY="402.0" prefHeight="122.0" prefWidth="533.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="136.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="418.0" minWidth="10.0" prefWidth="397.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Select" />
+            <ChoiceBox fx:id="dropRemoveAcc" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Button fx:id="btnRemoveAcc" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Remove" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <Button fx:id="btnBack" onAction="#goToHome" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>

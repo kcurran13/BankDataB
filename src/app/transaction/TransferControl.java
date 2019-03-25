@@ -2,12 +2,17 @@ package app.transaction;
 
 
 import app.Entities.User;
+import app.Main;
 import app.db.DB;
 import app.login.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,7 +26,7 @@ public class TransferControl {
     @FXML
     Label lblTextBalance, lblError, lblSuccess;
     @FXML
-    Button btnWithdraw, btnDeposit;
+    Button btnWithdraw, btnDeposit, btnBack;
     @FXML
     DatePicker chooseDate;
 
@@ -52,7 +57,7 @@ public class TransferControl {
         date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
         if (chooseDate.getValue().isAfter(LocalDate.now())) {
-            //DB.planTransaction();
+            DB.planTransaction(3000, fromAccNo, (transferAmt * -1), receiverAcc, date);
             lblSuccess.setVisible(true);
         } else if(chooseDate.getValue().equals(LocalDate.now())){
             DB.changeBalance(3000, fromAccNo, (transferAmt * -1), receiverAcc, date);
@@ -78,5 +83,17 @@ public class TransferControl {
     private String extractAccNo(ChoiceBox<String> box) {
         String[] b = box.getValue().split("-");
         return b[0];
+    }
+
+    @FXML
+    public void goToHome() {
+        try {
+            Parent bla = FXMLLoader.load(getClass().getResource("/app/home/home.fxml"));
+            Scene scene = new Scene(bla, 800, 600);
+            Main.stage.setScene(scene);
+            Main.stage.show();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
