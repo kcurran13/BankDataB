@@ -2,23 +2,33 @@ package app.transaction;
 
 
 import app.Entities.User;
+import app.Main;
 import app.db.DB;
 import app.login.LoginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TransferControl {
-    @FXML TextField txfClearing, txfAccount, txfAmount, txfTestAmount;
-    @FXML ChoiceBox dropFromAcc, dropTestAcc;
-    @FXML Label lblTextBalance;
-    @FXML Button btnWithdraw, btnDeposit;
+    @FXML
+    TextField txfClearing, txfAccount, txfAmount, txfTestAmount;
+    @FXML
+    ChoiceBox dropFromAcc, dropTestAcc;
+    @FXML
+    Label lblTextBalance, lblError, lblSuccess;
+    @FXML
+    Button btnWithdraw, btnDeposit, btnBack;
+    @FXML
+    DatePicker chooseDate;
 
     private User user;
     private double transferAmt;
@@ -35,16 +45,27 @@ public class TransferControl {
     }
 
     @FXML
-    private void getTransferText() {
+    private void makeTransfer() {
+        lblSuccess.setVisible(false);
+        lblError.setVisible(false);
         transferAmt = Integer.valueOf(txfAmount.getText());
         clearingNo = Integer.valueOf(txfClearing.getText());
         receiverAcc = txfAccount.getText();
         //listener for choicebox
         fromAccNo = extractAccNo(dropFromAcc);
+
         date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
-        DB.changeBalance(3000, fromAccNo, (transferAmt*-1), receiverAcc, date);
-        DB.changeBalance(clearingNo, receiverAcc, transferAmt, fromAccNo, date);
+        if (chooseDate.getValue().isAfter(LocalDate.now())) {
+            DB.planTransaction(3000, fromAccNo, (transferAmt * -1), receiverAcc, date);
+            lblSuccess.setVisible(true);
+        } else if(chooseDate.getValue().equals(LocalDate.now())){
+            DB.changeBalance(3000, fromAccNo, (transferAmt * -1), receiverAcc, date);
+            DB.changeBalance(clearingNo, receiverAcc, transferAmt, fromAccNo, date);
+            lblSuccess.setVisible(true);
+        } else {
+            lblError.setVisible(true);
+        }
     }
 
     @FXML
@@ -53,7 +74,7 @@ public class TransferControl {
         fromAccNo = extractAccNo(dropTestAcc);
         date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
-        if(event.getSource() == btnWithdraw) {
+        if (event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
         lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt, receiverAcc, date))));
@@ -62,5 +83,17 @@ public class TransferControl {
     private String extractAccNo(ChoiceBox<String> box) {
         String[] b = box.getValue().split("-");
         return b[0];
+    }
+
+    @FXML
+    public void goToHome() {
+        try {
+            Parent bla = FXMLLoader.load(getClass().getResource("/app/home/home.fxml"));
+            Scene scene = new Scene(bla, 800, 600);
+            Main.stage.setScene(scene);
+            Main.stage.show();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }

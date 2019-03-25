@@ -62,6 +62,10 @@ public abstract class DB {
         return newBalance;
     }
 
+    public static void planTransaction(int clearingNo, String fromAccNo, double amount, String receiverAcc, String date) {
+
+    }
+
     public static void createTransaction(String accNo, String date, double amount, String receiver, double newBalance) {
         PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?,?)");
 
@@ -94,7 +98,6 @@ public abstract class DB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(data);
         return data;
     }
 
