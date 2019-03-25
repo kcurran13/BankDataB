@@ -38,4 +38,5 @@ public class HomeController {
         Main.stage.setScene(scene);
         Main.stage.show();
     }
+
 }
