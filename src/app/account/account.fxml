@@ -21,14 +21,4 @@
          </GridPane.margin>
       </ChoiceBox>
     </children>
-    <columnConstraints>
-        <ColumnConstraints />
-        <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints />
-      <RowConstraints />
-    </rowConstraints>
 </GridPane>
