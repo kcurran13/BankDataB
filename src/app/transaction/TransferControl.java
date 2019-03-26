@@ -15,9 +15,8 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.ZoneId;
 
 public class TransferControl {
     @FXML
@@ -51,12 +50,13 @@ public class TransferControl {
 
         transferAmt = Integer.valueOf(txfAmount.getText());
         receiverAcc = txfAccount.getText();
-        //listener for choicebox
         fromAccNo = extractAccNo(dropFromAcc);
         date = new Timestamp(System.currentTimeMillis());
 
         if (chooseDate.getValue().isAfter(LocalDate.now())) {
-            DB.planTransaction(fromAccNo, (transferAmt * -1), receiverAcc, date);
+            java.util.Date date1 = java.util.Date.from(chooseDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            java.sql.Timestamp sqlDate = new java.sql.Timestamp(date1.getTime());
+            DB.planTransaction(fromAccNo, (transferAmt * -1), receiverAcc, sqlDate);
             lblSuccess.setVisible(true);
         } else if(chooseDate.getValue().equals(LocalDate.now())){
             DB.changeBalance(fromAccNo, (transferAmt * -1), receiverAcc, date);
