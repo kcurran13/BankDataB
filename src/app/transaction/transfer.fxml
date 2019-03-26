@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="900" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransferControl">
    <children>
-      <Label fx:id="lblTextBalance" layoutX="414.0" layoutY="588.0" text="Updated balance here" />
+      <Label fx:id="lblTextBalance" layoutX="543.0" layoutY="576.0" text="Updated balance here" visible="false" />
       <Label layoutX="314.0" layoutY="37.0" text="Transfers">
          <font>
             <Font size="50.0" />

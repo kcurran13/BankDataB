@@ -6,9 +6,7 @@ import app.Entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Random;
 
@@ -35,7 +33,7 @@ public abstract class DB {
         return result;
     }
 
-    public static double changeBalance(String fromAccNo, double amount, String receiverAcc, String date) {
+    public static double changeBalance(String fromAccNo, double amount, String receiverAcc, Timestamp date) {
         PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ?");
         PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE AccNo = ?");
 
@@ -60,16 +58,26 @@ public abstract class DB {
         return newBalance;
     }
 
-    public static void planTransaction(String fromAccNo, double amount, String receiverAcc, String date) {
+    public static void planTransaction(String fromAccNo, double amount, String receiverAcc, Timestamp date) {
+        PreparedStatement ps = prep("INSERT INTO plannedTransactions (toAccount, fromAccount, amount, date) VALUES (?,?,?,?)");
+        try {
+            ps.setString(1, receiverAcc);
+            ps.setString(2, fromAccNo);
+            ps.setDouble(3, amount);
+            ps.setTimestamp(4, date);
 
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
-    public static void createTransaction(String accNo, String date, double amount, String receiver, double newBalance) {
+    public static void createTransaction(String accNo, Timestamp date, double amount, String receiver, double newBalance) {
         PreparedStatement ps = prep("INSERT INTO transactions (accno, date, transamount, receiver, balance) VALUES (?,?,?,?,?)");
 
         try {
             ps.setString(1, accNo);
-            ps.setString(2, date);
+            ps.setTimestamp(2, date);
             ps.setDouble(3, amount);
             ps.setString(4, receiver);
             ps.setString(5, String.valueOf(newBalance));
