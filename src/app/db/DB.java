@@ -35,13 +35,12 @@ public abstract class DB {
         return result;
     }
 
-    public static double changeBalance(int clearingNo, String fromAccNo, double amount, String receiverAcc, String date) {
-        PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ? AND ClearingNo = ?");
-        PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE AccNo = ? AND ClearingNo = ?");
+    public static double changeBalance(String fromAccNo, double amount, String receiverAcc, String date) {
+        PreparedStatement ps = prep("SELECT balance FROM accounts WHERE AccNo = ?");
+        PreparedStatement ps2 = prep("UPDATE accounts SET balance = ? WHERE AccNo = ?");
 
         try {
             ps.setString(1, fromAccNo);
-            ps.setInt(2, clearingNo);
             ResultSet result = ps.executeQuery();
 
             while (result.next()) {
@@ -49,7 +48,6 @@ public abstract class DB {
                 if (newBalance >= 0) {
                     ps2.setDouble(1, newBalance);
                     ps2.setString(2, fromAccNo);
-                    ps2.setInt(3, clearingNo);
                     ps2.executeUpdate();
                 } else {
                     newBalance = result.getLong("balance");
@@ -62,12 +60,12 @@ public abstract class DB {
         return newBalance;
     }
 
-    public static void planTransaction(int clearingNo, String fromAccNo, double amount, String receiverAcc, String date) {
+    public static void planTransaction(String fromAccNo, double amount, String receiverAcc, String date) {
 
     }
 
     public static void createTransaction(String accNo, String date, double amount, String receiver, double newBalance) {
-        PreparedStatement ps = prep("INSERT INTO transactions VALUES (?,?,?,?,?)");
+        PreparedStatement ps = prep("INSERT INTO transactions (accno, date, transamount, receiver, balance) VALUES (?,?,?,?,?)");
 
         try {
             ps.setString(1, accNo);
