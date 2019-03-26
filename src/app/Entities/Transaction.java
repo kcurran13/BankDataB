@@ -3,6 +3,8 @@ package app.Entities;
 
 import app.annotations.Column;
 
+import java.sql.Timestamp;
+
 public class Transaction {
     @Column ("AccNo")
     private String accNo;
@@ -11,7 +13,7 @@ public class Transaction {
     @Column ("TransAmount")
     private double amount;
     @Column ("Date")
-    private String date;
+    private Timestamp date;
     @Column ("Balance")
     private double balance;
 
@@ -22,7 +24,7 @@ public class Transaction {
     public double getAmount() { return amount; }
 
     public String getDateAsString(){
-        return date;
+        return String.valueOf(date);
     }
 
     public double getNewBalance() {
