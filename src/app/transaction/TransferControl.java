@@ -48,6 +48,7 @@ public class TransferControl {
     private void makeTransfer() {
         lblSuccess.setVisible(false);
         lblError.setVisible(false);
+
         transferAmt = Integer.valueOf(txfAmount.getText());
         clearingNo = Integer.valueOf(txfClearing.getText());
         receiverAcc = txfAccount.getText();
@@ -57,11 +58,11 @@ public class TransferControl {
         date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
         if (chooseDate.getValue().isAfter(LocalDate.now())) {
-            DB.planTransaction(3000, fromAccNo, (transferAmt * -1), receiverAcc, date);
+            DB.planTransaction(fromAccNo, (transferAmt * -1), receiverAcc, date);
             lblSuccess.setVisible(true);
         } else if(chooseDate.getValue().equals(LocalDate.now())){
-            DB.changeBalance(3000, fromAccNo, (transferAmt * -1), receiverAcc, date);
-            DB.changeBalance(clearingNo, receiverAcc, transferAmt, fromAccNo, date);
+            DB.changeBalance(fromAccNo, (transferAmt * -1), receiverAcc, date);
+            DB.changeBalance(receiverAcc, transferAmt, fromAccNo, date);
             lblSuccess.setVisible(true);
         } else {
             lblError.setVisible(true);
@@ -77,7 +78,7 @@ public class TransferControl {
         if (event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
-        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(3000, fromAccNo, transferAmt, receiverAcc, date))));
+        lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(fromAccNo, transferAmt, receiverAcc, date))));
     }
 
     private String extractAccNo(ChoiceBox<String> box) {
