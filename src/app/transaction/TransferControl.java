@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -33,9 +34,8 @@ public class TransferControl {
     private User user;
     private double transferAmt;
     private String receiverAcc = null;
-    private int clearingNo;
     private String fromAccNo;
-    String date;
+    private java.sql.Timestamp date;
 
     @FXML
     private void initialize() throws SQLException {
@@ -50,12 +50,10 @@ public class TransferControl {
         lblError.setVisible(false);
 
         transferAmt = Integer.valueOf(txfAmount.getText());
-        clearingNo = Integer.valueOf(txfClearing.getText());
         receiverAcc = txfAccount.getText();
         //listener for choicebox
         fromAccNo = extractAccNo(dropFromAcc);
-
-        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+        date = new Timestamp(System.currentTimeMillis());
 
         if (chooseDate.getValue().isAfter(LocalDate.now())) {
             DB.planTransaction(fromAccNo, (transferAmt * -1), receiverAcc, date);
@@ -73,7 +71,7 @@ public class TransferControl {
     private void getChangeBalanceText(ActionEvent event) {
         transferAmt = Integer.valueOf(txfTestAmount.getText());
         fromAccNo = extractAccNo(dropTestAcc);
-        date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+        date = new Timestamp(System.currentTimeMillis());
 
         if (event.getSource() == btnWithdraw) {
             transferAmt *= -1;
