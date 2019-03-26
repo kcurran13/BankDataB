@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -32,7 +31,7 @@ public class TransferControl {
 
     private User user;
     private double transferAmt;
-    private String receiverAcc = null;
+    private String receiverAcc;
     private String fromAccNo;
     private java.sql.Timestamp date;
 

@@ -10,21 +10,4 @@
         <Button fx:id="btnTransfer" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="170.0" text="Transfer Funds" GridPane.rowIndex="4" />
         <Button fx:id="btnDetails" mnemonicParsing="false" onAction="#changeScene" prefHeight="39.0" prefWidth="170.0" text="Edit Accounts" GridPane.rowIndex="2" />
     </children>
-    <columnConstraints>
-        <ColumnConstraints />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-        <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-    </rowConstraints>
 </GridPane>

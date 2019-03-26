@@ -5,7 +5,6 @@ import app.Entities.Transaction;
 import app.Entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
 import java.util.List;
 import java.util.Random;
