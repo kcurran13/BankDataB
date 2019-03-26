@@ -19,9 +19,6 @@
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Label>
-      <Label fx:id="lblAccRemoved" layoutX="456.0" layoutY="536.0" text="Account successfully removed!" visible="false" />
-      <Label fx:id="lblNameChanged" layoutX="456.0" layoutY="167.0" text="Name successfully changed!" visible="false" />
-      <Label fx:id="lblAccCreated" layoutX="456.0" layoutY="375.0" text="Account successfully created!" visible="false" />
       <GridPane layoutX="113.0" layoutY="80.0" prefHeight="122.0" prefWidth="686.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="139.0" />
@@ -37,12 +34,14 @@
             <ChoiceBox fx:id="dropAccName" prefHeight="39.0" prefWidth="194.0" GridPane.columnIndex="1" />
             <TextField fx:id="txfChangeName" prefHeight="39.0" prefWidth="150.0" promptText="new name" GridPane.columnIndex="2" />
             <Button fx:id="btnAccName" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Submit" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="lblNameChanged" text="Name successfully changed!" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <GridPane layoutX="113.0" layoutY="232.0" prefHeight="130.0" prefWidth="424.0">
+      <GridPane layoutX="113.0" layoutY="232.0" prefHeight="109.0" prefWidth="644.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="272.0" minWidth="10.0" prefWidth="133.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="291.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="198.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="427.0" minWidth="10.0" prefWidth="316.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -52,12 +51,14 @@
             <Label text="Account Name" />
             <TextField fx:id="txfNewAccName" prefHeight="39.0" prefWidth="224.0" promptText="account name" GridPane.columnIndex="1" />
             <Button fx:id="btnAddAcc" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblAccCreated" text="Account successfully created!" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <GridPane layoutX="108.0" layoutY="402.0" prefHeight="122.0" prefWidth="533.0">
+      <GridPane layoutX="108.0" layoutY="402.0" prefHeight="122.0" prefWidth="626.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="136.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="418.0" minWidth="10.0" prefWidth="397.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="418.0" minWidth="10.0" prefWidth="189.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="418.0" minWidth="10.0" prefWidth="284.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -67,8 +68,9 @@
             <Label text="Select" />
             <ChoiceBox fx:id="dropRemoveAcc" prefWidth="150.0" GridPane.columnIndex="1" />
             <Button fx:id="btnRemoveAcc" mnemonicParsing="false" onAction="#getButtonInput" prefHeight="39.0" prefWidth="89.0" text="Remove" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblAccRemoved" prefHeight="30.0" prefWidth="243.0" text="Account successfully removed!" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="btnBack" onAction="#goToHome" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToHome" text="Back" />
    </children>
 </AnchorPane>
