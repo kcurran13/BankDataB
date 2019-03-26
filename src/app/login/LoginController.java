@@ -51,6 +51,7 @@ public class LoginController {
         if (user == null) {
             lblLoginError.setVisible(true);
         } else {
+            DB.checkForPlannedTransactions();
             goToHome();
         }
     }

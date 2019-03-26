@@ -99,7 +99,7 @@
                </GridPane.margin></Button>
             <Button fx:id="btnDeposit" mnemonicParsing="false" onAction="#getChangeBalanceText" text="Deposit" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label text="E.ON BillPay" GridPane.rowIndex="1" />
-            <TextField disable="true" text="12345678" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txfTestTo" disable="true" text="12345678" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Label layoutX="43.0" layoutY="388.0" text="Test Withdraw/Deposit function">

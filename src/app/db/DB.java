@@ -3,8 +3,11 @@ package app.db;
 
 import app.Entities.Transaction;
 import app.Entities.User;
+import app.transaction.TransactionController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+
 import java.sql.*;
 import java.util.List;
 import java.util.Random;
@@ -58,7 +61,7 @@ public abstract class DB {
     }
 
     public static void planTransaction(String fromAccNo, double amount, String receiverAcc, Timestamp date) {
-        PreparedStatement ps = prep("INSERT INTO plannedTransactions (toAccount, fromAccount, amount, date) VALUES (?,?,?,?)");
+        PreparedStatement ps = prep("INSERT INTO plannedTransactions (Receiver, AccNo, TransAmount, Date) VALUES (?,?,?,?)");
         try {
             ps.setString(1, receiverAcc);
             ps.setString(2, fromAccNo);
@@ -69,6 +72,40 @@ public abstract class DB {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public static void checkForPlannedTransactions(){
+        List<Transaction> plannedTransactions  = null;
+        PreparedStatement ps = prep("SELECT AccNo, Receiver, TransAmount, Date FROM plannedTransactions WHERE date <= CURDATE()");
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+
+            try {
+                plannedTransactions = (List<Transaction>) (List<?>) new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+            if (plannedTransactions != null){
+                for (Transaction t: plannedTransactions){
+                    changeBalance(t.getAccNo(), (t.getAmount()*-1), t.getReceiver(), date);
+                    changeBalance(t.getReceiver(), t.getAmount(), t.getAccNo(), date);
+                    deletePlannedTransaction(t);
+                }
+            }
+    }
+
+    public static void deletePlannedTransaction(Transaction t) {
+        PreparedStatement ps = prep("DELETE FROM plannedTransactions WHERE Receiver = ? AND date = ?");
+
+        try {
+            ps.setString(1, t.getReceiver());
+            ps.setTimestamp(2, t.getDate());
+
+            ps.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     public static void createTransaction(String accNo, Timestamp date, double amount, String receiver, double newBalance) {

@@ -19,7 +19,7 @@ import java.time.ZoneId;
 
 public class TransferControl {
     @FXML
-    TextField txfClearing, txfAccount, txfAmount, txfTestAmount;
+    TextField txfClearing, txfAccount, txfAmount, txfTestAmount, txfTestTo;
     @FXML
     ChoiceBox dropFromAcc, dropTestAcc;
     @FXML
@@ -55,7 +55,7 @@ public class TransferControl {
         if (chooseDate.getValue().isAfter(LocalDate.now())) {
             java.util.Date date1 = java.util.Date.from(chooseDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             java.sql.Timestamp sqlDate = new java.sql.Timestamp(date1.getTime());
-            DB.planTransaction(fromAccNo, (transferAmt * -1), receiverAcc, sqlDate);
+            DB.planTransaction(fromAccNo, transferAmt, receiverAcc, sqlDate);
             lblSuccess.setVisible(true);
         } else if(chooseDate.getValue().equals(LocalDate.now())){
             DB.changeBalance(fromAccNo, (transferAmt * -1), receiverAcc, date);
@@ -71,11 +71,13 @@ public class TransferControl {
         transferAmt = Integer.valueOf(txfTestAmount.getText());
         fromAccNo = extractAccNo(dropTestAcc);
         date = new Timestamp(System.currentTimeMillis());
+        receiverAcc = txfTestTo.getText();
 
         if (event.getSource() == btnWithdraw) {
             transferAmt *= -1;
         }
         lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(fromAccNo, transferAmt, receiverAcc, date))));
+        DB.changeBalance(receiverAcc, (transferAmt*-1), fromAccNo, date);
     }
 
     private String extractAccNo(ChoiceBox<String> box) {

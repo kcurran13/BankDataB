@@ -27,6 +27,8 @@ public class Transaction {
         return String.valueOf(date);
     }
 
+    public Timestamp getDate() {return date;}
+
     public double getNewBalance() {
         return balance;
     }
