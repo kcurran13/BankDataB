@@ -8,9 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 
 public class LoginController {
@@ -53,6 +51,7 @@ public class LoginController {
         if (user == null) {
             lblLoginError.setVisible(true);
         } else {
+            DB.checkForPlannedTransactions();
             goToHome();
         }
     }
@@ -72,5 +71,4 @@ public class LoginController {
     public void goToHome() {
         switchScene("/app/home/home.fxml");
     }
-
 }

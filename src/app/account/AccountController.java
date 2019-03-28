@@ -27,12 +27,9 @@ public class AccountController {
     private User user;
     private int offset = 0;
 
-
     @FXML
     private void initialize() throws SQLException {
         user = LoginController.getUser();
-
-
         dropAcc.setItems(DB.getUserAccounts(user));
         dropAcc.getSelectionModel().select(0);
 

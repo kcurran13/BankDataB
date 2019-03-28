@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.transaction.TransactionController">
     <children>
-        <BorderPane />
-        <HBox spacing="100.0">
+        <BorderPane/>
+        <HBox>
             <children>
-                <Label fx:id="date" text="Date" />
-                <Label fx:id="receiver" text="Receiver" />
-                <Label fx:id="amount" text="Amount" />
-                <Label fx:id="newBalance" text="New balance" />
+                <Label fx:id="date" text="Date"/>
+                <Region maxHeight="40.0" maxWidth="40.0" prefHeight="30.0" prefWidth="40.0" HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="receiver" text="Receiver"/>
+                <Region maxHeight="40.0" maxWidth="40.0" prefHeight="30.0" prefWidth="40.0" HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="amount" text="Amount"/>
+                <Region maxHeight="40.0" maxWidth="40.0" prefHeight="30.0" prefWidth="40.0" HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="newBalance" text="New balance"/>
             </children>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
+            <padding>
+                <Insets top="10.0"/>
+            </padding>
         </HBox>
     </children>
 </AnchorPane>
