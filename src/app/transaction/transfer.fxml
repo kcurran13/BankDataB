@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -38,7 +38,7 @@
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin></ChoiceBox>
-            <Label text="To account:" GridPane.columnIndex="1">
+            <Label text="To account:" GridPane.columnIndex="3">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -72,6 +72,12 @@
             </Label>
             <Label fx:id="lblError" alignment="TOP_LEFT" contentDisplay="TOP" text="Error! Please try again!" textFill="RED" visible="false" GridPane.columnIndex="4" />
             <Label fx:id="lblSuccess" text="Transfer processed" textFill="#1fb933" visible="false" GridPane.columnIndex="4" />
+            <ChoiceBox fx:id="dropRegularity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Regularity" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
       <GridPane layoutX="50.0" layoutY="440.0" prefHeight="136.0" prefWidth="742.0">

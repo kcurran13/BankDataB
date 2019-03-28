@@ -60,38 +60,49 @@ public abstract class DB {
         return newBalance;
     }
 
-    public static void planTransaction(String fromAccNo, double amount, String receiverAcc, Timestamp date) {
+    public static void planTransaction(String fromAccNo, double amount, String receiverAcc, Timestamp date, String regularity) {
         PreparedStatement ps = prep("INSERT INTO plannedTransactions (Receiver, AccNo, TransAmount, Date) VALUES (?,?,?,?)");
-        try {
-            ps.setString(1, receiverAcc);
-            ps.setString(2, fromAccNo);
-            ps.setDouble(3, amount);
-            ps.setTimestamp(4, date);
+        PreparedStatement ps2 = prep("CREATE EVENT monthlyTrans ON SCHEDULE EVERY '1' MONTH STARTS CURRENT_DATE DO INSERT INTO plannedTransactions (Receiver, AccNo, TransAmount, Date) VALUES (?,?,?,?)");
 
-            ps.executeUpdate();
+        try {
+            if (regularity.equals("Once, now")) {
+                ps.setString(1, receiverAcc);
+                ps.setString(2, fromAccNo);
+                ps.setDouble(3, amount);
+                ps.setTimestamp(4, date);
+
+                ps.executeUpdate();
+            } else if (regularity.equals("Monthly")) {
+                ps2.setString(1, receiverAcc);
+                ps2.setString(2, fromAccNo);
+                ps2.setDouble(3, amount);
+                ps2.setTimestamp(4, date);
+
+                ps2.executeUpdate();
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public static void checkForPlannedTransactions(){
-        List<Transaction> plannedTransactions  = null;
+    public static void checkForPlannedTransactions() {
+        List<Transaction> plannedTransactions = null;
         PreparedStatement ps = prep("SELECT AccNo, Receiver, TransAmount, Date FROM plannedTransactions WHERE date <= CURDATE()");
         Timestamp date = new Timestamp(System.currentTimeMillis());
 
-            try {
-                plannedTransactions = (List<Transaction>) (List<?>) new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+        try {
+            plannedTransactions = (List<Transaction>) (List<?>) new ObjectMapper<>(Transaction.class).map(ps.executeQuery());
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
 
-            if (plannedTransactions != null){
-                for (Transaction t: plannedTransactions){
-                    changeBalance(t.getAccNo(), (t.getAmount()*-1), t.getReceiver(), date);
-                    changeBalance(t.getReceiver(), t.getAmount(), t.getAccNo(), date);
-                    deletePlannedTransaction(t);
-                }
+        if (plannedTransactions != null) {
+            for (Transaction t : plannedTransactions) {
+                changeBalance(t.getAccNo(), (t.getAmount() * -1), t.getReceiver(), date);
+                changeBalance(t.getReceiver(), t.getAmount(), t.getAccNo(), date);
+                deletePlannedTransaction(t);
             }
+        }
     }
 
     public static void deletePlannedTransaction(Transaction t) {
@@ -102,7 +113,7 @@ public abstract class DB {
             ps.setTimestamp(2, t.getDate());
 
             ps.executeUpdate();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 

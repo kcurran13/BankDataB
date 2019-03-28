@@ -5,6 +5,7 @@ import app.Entities.User;
 import app.Main;
 import app.db.DB;
 import app.login.LoginController;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,7 @@ public class TransferControl {
     @FXML
     TextField txfClearing, txfAccount, txfAmount, txfTestAmount, txfTestTo;
     @FXML
-    ChoiceBox dropFromAcc, dropTestAcc;
+    ChoiceBox dropFromAcc, dropTestAcc, dropRegularity;
     @FXML
     Label lblTextBalance, lblError, lblSuccess;
     @FXML
@@ -31,12 +32,14 @@ public class TransferControl {
 
     private User user;
     private double transferAmt;
-    private String receiverAcc;
-    private String fromAccNo;
+    private String receiverAcc, fromAccNo, regularity;
     private java.sql.Timestamp date;
 
     @FXML
     private void initialize() throws SQLException {
+        dropRegularity.setItems(FXCollections.observableArrayList("Once, now", "Monthly"));
+        dropRegularity.getSelectionModel().select(0);
+
         user = LoginController.getUser();
         dropFromAcc.setItems(DB.getUserAccounts(user));
         dropTestAcc.setItems(DB.getUserAccounts(user));
@@ -51,11 +54,12 @@ public class TransferControl {
         receiverAcc = txfAccount.getText();
         fromAccNo = extractAccNo(dropFromAcc);
         date = new Timestamp(System.currentTimeMillis());
+        regularity = (String) dropRegularity.getValue();
 
         if (chooseDate.getValue().isAfter(LocalDate.now())) {
             java.util.Date date1 = java.util.Date.from(chooseDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             java.sql.Timestamp sqlDate = new java.sql.Timestamp(date1.getTime());
-            DB.planTransaction(fromAccNo, transferAmt, receiverAcc, sqlDate);
+            DB.planTransaction(fromAccNo, transferAmt, receiverAcc, sqlDate, regularity);
             lblSuccess.setVisible(true);
         } else if(chooseDate.getValue().equals(LocalDate.now())){
             DB.changeBalance(fromAccNo, (transferAmt * -1), receiverAcc, date);
