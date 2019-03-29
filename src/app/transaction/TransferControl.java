@@ -81,6 +81,7 @@ public class TransferControl {
             transferAmt *= -1;
         }
         lblTextBalance.setText(String.format("Your new account balance is: %s", String.valueOf(DB.changeBalance(fromAccNo, transferAmt, receiverAcc, date))));
+        lblTextBalance.setVisible(true);
         DB.changeBalance(receiverAcc, (transferAmt*-1), fromAccNo, date);
     }
 
