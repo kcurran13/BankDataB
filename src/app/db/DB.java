@@ -3,11 +3,8 @@ package app.db;
 
 import app.Entities.Transaction;
 import app.Entities.User;
-import app.transaction.TransactionController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-
 import java.sql.*;
 import java.util.List;
 import java.util.Random;
